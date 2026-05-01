@@ -37,6 +37,8 @@ Curated Insurance Data Warehouse
         | Star schema, facts, dimensions, data marts
         |
 Power BI / Databricks SQL / Regulatory Reports / AI-Ready Data Products
+```
+
 ## Architecture Layers
 
 ### 1. Source Layer
@@ -85,3 +87,4 @@ Recommended folder structure:
 /adls/insurance/rejects/
 /adls/insurance/audit/
 /adls/insurance/checkpoints/
+```
