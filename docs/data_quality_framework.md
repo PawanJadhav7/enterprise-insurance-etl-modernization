@@ -61,7 +61,9 @@ Source Data
    -> Data Quality Validation
    -> Valid Records
    -> Silver / Gold Tables
+```
 
+```text
 Invalid Records
    -> Reject Table
    -> Error Review
