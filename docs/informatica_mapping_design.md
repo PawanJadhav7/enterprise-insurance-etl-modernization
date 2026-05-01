@@ -75,3 +75,75 @@ Salesforce Account / Contact
           Expire old SCD2 record
     -> Target: dim_customer
     -> Target: reject_customer_records
+LastModifiedDate > previous_successful_watermark
+Policy Source
+    -> Source Qualifier
+    -> Expression: normalize policy status and premium frequency
+    -> Lookup: dim_customer
+    -> Lookup: dim_product
+    -> Expression: create record_hash
+    -> Lookup: current dim_policy
+    -> Router:
+          New Policy
+          Changed Policy
+          Unchanged Policy
+          Rejected Policy
+    -> Update Strategy
+    -> Target: dim_policy
+Product Source
+    -> Source Qualifier / File Source
+    -> Expression: standardize product name and product family
+    -> Lookup: existing dim_product
+    -> Router:
+          New Product
+          Existing Product
+    -> Update Strategy
+    -> Target: dim_product
+Claims Source
+    -> Source Qualifier
+    -> Expression: validate claim amount, dates, status
+    -> Lookup: dim_customer
+    -> Lookup: dim_policy
+    -> Lookup: dim_product
+    -> Lookup: dim_claim_status
+    -> Router:
+          Valid Claims
+          Invalid Claims
+    -> Expression: calculate claim_cycle_days
+    -> Target: fact_claim
+    -> Target: reject_claim_records
+Billing Source
+    -> Source Qualifier
+    -> Expression: normalize payment status
+    -> Lookup: dim_policy
+    -> Lookup: dim_customer
+    -> Aggregator: summarize payment amounts where required
+    -> Router:
+          Valid Payments
+          Failed Payments
+          Rejected Payments
+    -> Target: fact_policy_premium
+    -> Target: fact_payment
+    -> Target: reject_payment_records
+Risk Source
+    -> Source Qualifier
+    -> Expression: standardize risk tier
+    -> Lookup: existing dim_risk_tier by customer_id
+    -> Router:
+          New Risk Record
+          Risk Tier Changed
+          No Change
+    -> Update Strategy
+    -> Target: dim_risk_tier
+previous_risk_tier = current_risk_tier
+current_risk_tier = new_risk_tier
+risk_tier_change_date = current date
+$$ENV=DEV
+$$BATCH_ID=20260501_001
+$$SOURCE_SYSTEM=SALESFORCE
+$$WATERMARK_START=2026-04-30 00:00:00
+$$WATERMARK_END=2026-05-01 00:00:00
+etl_batch_control
+etl_step_control
+etl_reject_records
+etl_data_quality_results
