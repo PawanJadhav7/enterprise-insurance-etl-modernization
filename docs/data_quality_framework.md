@@ -55,6 +55,9 @@ Basic reconciliation formula:
 
 ```text
 source_count = target_insert_count + target_update_count + reject_count
+```
+
+```text
 Source Data
    -> Ingestion
    -> Staging / Bronze
@@ -68,5 +71,4 @@ Invalid Records
    -> Reject Table
    -> Error Review
    -> Correction / Reprocessing
-
 ```
