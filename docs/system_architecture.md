@@ -37,8 +37,3 @@ Curated Insurance Data Warehouse
         | Star schema, facts, dimensions, data marts
         |
 Power BI / Databricks SQL / Regulatory Reports / AI-Ready Data Products
-```text
-Salesforce CRM
-...
-Power BI / Databricks SQL / Regulatory Reports / AI-Ready Data Products
-```
