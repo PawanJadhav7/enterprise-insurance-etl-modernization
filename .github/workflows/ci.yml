@@ -1,0 +1,58 @@
+name: Insurance ETL Modernization CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - "feature/**"
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  validate-project:
+    name: Validate Project Structure
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Validate required folders
+        run: |
+          test -d docs
+          test -d sql
+          test -d databricks
+          test -d blog
+          test -d data_generator
+
+      - name: Validate required documentation files
+        run: |
+          test -f README.md
+          test -f docs/business_scenario.md
+          test -f docs/system_architecture.md
+          test -f docs/source_systems.md
+          test -f docs/tech_stack.md
+
+      - name: Validate required SQL files
+        run: |
+          test -f sql/dimensions.sql
+          test -f sql/facts.sql
+          test -f sql/scd_type_1.sql
+          test -f sql/scd_type_2.sql
+          test -f sql/scd_type_3.sql
+          test -f sql/advanced_sql_queries.sql
+          test -f sql/data_quality_checks.sql
+
+      - name: Validate Python files compile
+        run: |
+          python -m py_compile data_generator/generate_insurance_data.py
+          python -m py_compile databricks/bronze_to_silver_notebook.py
+          python -m py_compile databricks/silver_to_gold_notebook.py
