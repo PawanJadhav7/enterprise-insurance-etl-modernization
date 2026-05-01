@@ -57,6 +57,8 @@ Basic reconciliation formula:
 source_count = target_insert_count + target_update_count + reject_count
 ```
 
+## Data Quality Flow
+
 ```text
 Source Data
    -> Ingestion
