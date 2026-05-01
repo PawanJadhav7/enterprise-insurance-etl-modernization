@@ -22,18 +22,6 @@ The goal is to consolidate data from Salesforce, policy administration, claims, 
 
 ## Salesforce CRM
 
-Salesforce provides customer, advisor, lead, and service interaction data.
-
-### Key Objects
-
-- Account
-- Contact
-- Lead
-- Opportunity
-- Case
-- User
-- Advisor / Producer custom objects
-
 ### Integration Pattern
 
 ```text
@@ -46,8 +34,7 @@ Policy Administration Database / Extract
    -> Informatica Source Qualifier
    -> Transformation and Validation
    -> Azure SQL / ADLS Staging
-   -> Gold dim_policy and fact_policy_snapshot
-   -> Claims Source
+   -> Gold dim_policy and fact_policy_snapshotClaims Source
    -> Informatica / Azure Data Factory
    -> Bronze Claim Raw
    -> Silver Claim Clean
@@ -57,27 +44,83 @@ Policy Administration Database / Extract
    -> Transformation and Validation
    -> Azure SQL / ADLS Staging
    -> Gold dim_policy and fact_policy_snapshot
+```
+
+## Claims Management System
+
+### Integration Pattern
+
+```text
 Claims Source
    -> Informatica / Azure Data Factory
    -> Bronze Claim Raw
    -> Silver Claim Clean
    -> Gold fact_claim and fact_claim_line
+```
+
+## Billing Platform
+
+### Integration Pattern
+
+```text
 Billing Source
    -> Informatica Mapping
    -> Payment Validation
    -> Gold fact_policy_premium and fact_payment
+```
+
+## Annuity Platform
+
+### Integration Pattern
+
+```text
 Annuity Extract
    -> Informatica
    -> Staging
    -> Silver Annuity Clean
    -> Gold fact_annuity_transaction
+```
+
+## Long-Term Care System
+
+### Integration Pattern
+
+```text
 LTC Source
    -> Informatica / Files
    -> Silver LTC Clean
    -> Gold fact_ltc_benefit
+```
+
+## MuleSoft APIs
+
+### Integration Pattern
+
+```text
 MuleSoft API
    -> IICS REST Connector / ADF REST Connector
    -> Staging
    -> Silver Normalized Tables
    -> Gold Reporting Tables
+```
+
+## Source-to-Target Reconciliation
+
+Every source load should support reconciliation between source records, target inserts, target updates, and rejected records.
+
+```text
 source_count = target_insert_count + target_update_count + reject_count
+```
+
+Recommended control tables:
+
+- etl_batch_control
+- etl_step_control
+- etl_reject_records
+- etl_data_quality_results
+
+## Interview Talking Point
+
+For a Manulife / John Hancock–style environment, the source landscape is usually hybrid. Salesforce and APIs provide modern SaaS and service data, while policy, claims, billing, annuity, and long-term care platforms may come from legacy relational systems, mainframe extracts, or batch files.
+
+The ETL design must support connector-based ingestion, file processing, CDC or incremental extraction, auditability, reconciliation, and secure handling of PII/PHI data.
