@@ -75,6 +75,26 @@ Salesforce Account / Contact
           Expire old SCD2 record
     -> Target: dim_customer
     -> Target: reject_customer_records
+```
+
+
+### Incremental Logic
+
+```text
+
+LastModifiedDate > previous_successful_watermark
+
+```
+
+## Mapping 2: Policy Dimension Load
+
+### Purpose
+
+Load policy data from the policy administration system into `dim_policy`.
+
+### Mapping Flow
+
+```text
 LastModifiedDate > previous_successful_watermark
 Policy Source
     -> Source Qualifier
@@ -90,6 +110,17 @@ Policy Source
           Rejected Policy
     -> Update Strategy
     -> Target: dim_policy
+```
+
+## Mapping 3: Product Dimension Load
+
+### Purpose
+
+Load product reference data into `dim_product`.
+
+### Mapping Flow
+
+```text
 Product Source
     -> Source Qualifier / File Source
     -> Expression: standardize product name and product family
@@ -99,6 +130,17 @@ Product Source
           Existing Product
     -> Update Strategy
     -> Target: dim_product
+```
+
+## Mapping 4: Claim Fact Load
+
+### Purpose
+
+Load claim header data into `fact_claim`.
+
+### Mapping Flow
+
+```text
 Claims Source
     -> Source Qualifier
     -> Expression: validate claim amount, dates, status
@@ -112,6 +154,17 @@ Claims Source
     -> Expression: calculate claim_cycle_days
     -> Target: fact_claim
     -> Target: reject_claim_records
+```
+
+## Mapping 5: Premium Billing Load
+
+### Purpose
+
+Load premium billing and payment records.
+
+### Mapping Flow
+
+```text
 Billing Source
     -> Source Qualifier
     -> Expression: normalize payment status
@@ -125,6 +178,17 @@ Billing Source
     -> Target: fact_policy_premium
     -> Target: fact_payment
     -> Target: reject_payment_records
+```
+
+## Mapping 6: Risk Tier SCD Type 3 Load
+
+### Purpose
+
+Track current and previous customer risk tier.
+
+### Mapping Flow
+
+```text
 Risk Source
     -> Source Qualifier
     -> Expression: standardize risk tier
@@ -135,17 +199,35 @@ Risk Source
           No Change
     -> Update Strategy
     -> Target: dim_risk_tier
+
+
+
+### Type 3 Logic
+
+```text
 previous_risk_tier = current_risk_tier
 current_risk_tier = new_risk_tier
 risk_tier_change_date = current date
+```
+
+## Parameterization Example
+
+```text
 $$ENV=DEV
 $$BATCH_ID=20260501_001
 $$SOURCE_SYSTEM=SALESFORCE
 $$WATERMARK_START=2026-04-30 00:00:00
 $$WATERMARK_END=2026-05-01 00:00:00
+```
+
+## Operational Monitoring Tables
+
+```text
 etl_batch_control
 etl_step_control
 etl_reject_records
 etl_data_quality_results
-
 ```
+## Interview Talking Point
+
+This mapping design demonstrates enterprise Informatica ETL patterns including Salesforce extraction, lookup-based surrogate key resolution, Router-based reject handling, SCD Type 2 customer and policy processing, SCD Type 3 risk tier tracking, parameterized workflows, and batch-level reconciliation.
