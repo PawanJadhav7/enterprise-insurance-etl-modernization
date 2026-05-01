@@ -37,3 +37,51 @@ Curated Insurance Data Warehouse
         | Star schema, facts, dimensions, data marts
         |
 Power BI / Databricks SQL / Regulatory Reports / AI-Ready Data Products
+## Architecture Layers
+
+### 1. Source Layer
+
+The source layer includes enterprise systems used across insurance operations:
+
+- Salesforce CRM
+- Policy administration systems
+- Claims management systems
+- Billing and premium systems
+- Annuity platforms
+- Long-term care systems
+- MuleSoft APIs
+- Mainframe extracts
+- SFTP files
+- SQL Server / Oracle databases
+
+### 2. Integration Layer
+
+The integration layer uses Informatica IICS / PowerCenter for enterprise ETL workflows.
+
+Responsibilities:
+
+- Source extraction
+- Salesforce integration
+- API and file ingestion
+- Data validation
+- Lookup handling
+- Transformation logic
+- SCD processing
+- Workflow scheduling
+- Reject handling
+- Audit logging
+- Source-to-target reconciliation
+
+### 3. Cloud Landing Layer
+
+Azure Data Lake Storage Gen2 is used as the cloud landing and storage layer.
+
+Recommended folder structure:
+
+```text
+/adls/insurance/bronze/
+/adls/insurance/silver/
+/adls/insurance/gold/
+/adls/insurance/rejects/
+/adls/insurance/audit/
+/adls/insurance/checkpoints/
