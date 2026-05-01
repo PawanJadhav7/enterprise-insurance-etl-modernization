@@ -30,15 +30,13 @@ Salesforce API
    -> Staging Tables
    -> Silver Customer and Advisor Tables
    -> Gold Customer and Advisor Dimensions
-Policy Administration Database / Extract
-   -> Informatica Source Qualifier
-   -> Transformation and Validation
-   -> Azure SQL / ADLS Staging
-   -> Gold dim_policy and fact_policy_snapshotClaims Source
-   -> Informatica / Azure Data Factory
-   -> Bronze Claim Raw
-   -> Silver Claim Clean
-   -> Gold fact_claim and fact_claim_line
+```
+
+## Policy Administration System
+
+### Integration Pattern
+
+```text
 Policy Administration Database / Extract
    -> Informatica Source Qualifier
    -> Transformation and Validation
