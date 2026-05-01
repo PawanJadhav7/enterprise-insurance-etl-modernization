@@ -46,7 +46,8 @@ Policy Administration Database / Extract
    -> Informatica Source Qualifier
    -> Transformation and Validation
    -> Azure SQL / ADLS Staging
-   -> Gold dim_policy and fact_policy_snapshotClaims Source
+   -> Gold dim_policy and fact_policy_snapshot
+   -> Claims Source
    -> Informatica / Azure Data Factory
    -> Bronze Claim Raw
    -> Silver Claim Clean
