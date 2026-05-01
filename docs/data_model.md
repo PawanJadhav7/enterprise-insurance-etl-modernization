@@ -345,3 +345,5 @@ dim_customer       dim_policy       dim_product       dim_date
         --------------- fact_claim --------------------
                        |
                  dim_claim_status
+
+```
