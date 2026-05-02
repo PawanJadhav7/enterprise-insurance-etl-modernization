@@ -90,7 +90,11 @@ LastModifiedDate > previous_successful_watermark
 
 ### Purpose
 
+```text
+
 Load policy data from the policy administration system into `dim_policy`.
+
+```
 
 ### Mapping Flow
 
@@ -116,7 +120,10 @@ Policy Source
 
 ### Purpose
 
+```text
 Load product reference data into `dim_product`.
+
+```
 
 ### Mapping Flow
 
@@ -136,7 +143,11 @@ Product Source
 
 ### Purpose
 
+```text
+
 Load claim header data into `fact_claim`.
+
+```
 
 ### Mapping Flow
 
@@ -160,7 +171,11 @@ Claims Source
 
 ### Purpose
 
+```text
+
 Load premium billing and payment records.
+
+```
 
 ### Mapping Flow
 
@@ -184,7 +199,11 @@ Billing Source
 
 ### Purpose
 
+```text
+
 Track current and previous customer risk tier.
+
+```
 
 ### Mapping Flow
 
@@ -200,7 +219,7 @@ Risk Source
     -> Update Strategy
     -> Target: dim_risk_tier
 
-
+```
 
 ### Type 3 Logic
 
